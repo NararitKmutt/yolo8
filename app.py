@@ -85,7 +85,7 @@ if source_radio == settings.IMAGE:
                 results = model(uploaded_image, conf=confidence )
                 # model = YOLO(model_path)
                 # results = model(uploaded_image)
-                # st.write(results)
+                st.write(results)
 
                 for r in results:
                     max_prob_index = r.probs.top1
