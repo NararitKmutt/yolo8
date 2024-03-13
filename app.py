@@ -86,7 +86,7 @@ if source_radio == settings.IMAGE:
                 # img = PIL.Image.open(source_img)
                 # results = model.predict(uploaded_image, conf=confidence )
                 model = YOLO(model_path)
-                results = model(source_img)
+                results = model(uploaded_image)
                 st.write(results)
 
                 for r in results:
