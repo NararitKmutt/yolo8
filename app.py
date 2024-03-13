@@ -11,30 +11,32 @@ import helper
 
 # Setting page layout
 st.set_page_config(
-    page_title="Object Detection using YOLOv8",
-    page_icon="🤖",
+    page_title="Plastic Bottles for Recycling",
+    page_icon="♻",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
 # Main page heading
-st.title("Object Detection using YOLOv8")
+st.title("♺ Classification of Plastic Bottles for Recycling")
 
 # Sidebar
 st.sidebar.header("ML Model Config")
 
 # Model Options
 model_type = st.sidebar.radio(
-    "Select Task", ['Detection', 'Segmentation'])
+    "Select Task", ['DETECTION OBJECTS', 'CLASSIFICATION PET/HDPE'])
 
 confidence = float(st.sidebar.slider(
     "Select Model Confidence", 25, 100, 40)) / 100
 
 # Selecting Detection Or Segmentation
-if model_type == 'Detection':
+if model_type == 'DETECTION OBJECTS':
     model_path = Path(settings.DETECTION_MODEL)
-elif model_type == 'Segmentation':
-    model_path = Path(settings.SEGMENTATION_MODEL)
+elif model_type == 'CLASSIFICATION PET/HDPE':
+    model_path = Path(settings.CLASSIFICATION_MODEL)
+# elif model_type == 'ClassificationAll':
+#     model_path = Path(settings.CLASSIFICATIONALL_MODEL)
 
 # Load Pre-trained ML Model
 try:
@@ -43,9 +45,9 @@ except Exception as ex:
     st.error(f"Unable to load model. Check the specified path: {model_path}")
     st.error(ex)
 
-st.sidebar.header("Image/Video Config")
+# st.sidebar.header("ImSourceage")
 source_radio = st.sidebar.radio(
-    "Select Source", settings.SOURCES_LIST)
+    "Source", settings.SOURCES_LIST)
 
 source_img = None
 # If image is selected
@@ -75,21 +77,24 @@ if source_radio == settings.IMAGE:
             default_detected_image_path = str(settings.DEFAULT_DETECT_IMAGE)
             default_detected_image = PIL.Image.open(
                 default_detected_image_path)
-            st.image(default_detected_image_path, caption='Detected Image',
+            st.image(default_detected_image_path, caption='Classification Image',
                      use_column_width=True)
         else:
-            if st.sidebar.button('Detect Objects'):
+            if st.sidebar.button('Process Image'):
                 res = model.predict(uploaded_image,
                                     conf=confidence
                                     )
+                names = model.names
                 boxes = res[0].boxes
+                
                 res_plotted = res[0].plot()[:, :, ::-1]
-                st.image(res_plotted, caption='Detected Image',
+                st.image(res_plotted, caption='Classification Image',
                          use_column_width=True)
                 try:
-                    with st.expander("Detection Results"):
-                        for box in boxes:
-                            st.write(box.data)
+                    with st.expander("Classification Results"):
+                        for r in res:
+                            for c in r.boxes.cls:
+                                st.write(names[int(c)])
                 except Exception as ex:
                     # st.write(ex)
                     st.write("No image is uploaded yet!")
@@ -97,14 +102,8 @@ if source_radio == settings.IMAGE:
 elif source_radio == settings.VIDEO:
     helper.play_stored_video(confidence, model)
 
-elif source_radio == settings.WEBCAM:
-    helper.play_webcam(confidence, model)
-
-elif source_radio == settings.RTSP:
-    helper.play_rtsp_stream(confidence, model)
-
-elif source_radio == settings.YOUTUBE:
-    helper.play_youtube_video(confidence, model)
+# elif source_radio == settings.WEBCAM:
+#     helper.play_webcam(confidence, model)
 
 else:
     st.error("Please select a valid source type!")
