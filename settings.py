@@ -29,5 +29,5 @@ DEFAULT_DETECT_IMAGE = IMAGES_DIR / 'detected.jpg'
 # ML Model config
 MODEL_DIR = ROOT / 'weights'
 DETECTION_MODEL = MODEL_DIR / 'yolov8m.pt'
-CLASSIFICATION_MODEL = MODEL_DIR / 'best.pt'
+CLASSIFICATION_MODEL = MODEL_DIR / 'best_cls.pt'
 CLASSIFICATIONALL_MODEL = MODEL_DIR / 'yolov8n-cls.pt'
