@@ -85,14 +85,14 @@ if source_radio == settings.IMAGE:
                 # res = model(uploaded_image,
                 #                     conf=confidence
                 #                     )
-                model = YOLO(model_path)
-                names = model.names
+                res = YOLO(model_path)
+                names = res.names
                 st.write(names)
                 # boxes = res[0].boxes
                 
-                # res_plotted = res[0].plot()[:, :, ::-1]
-                # st.image(res_plotted, caption='Classification Image',
-                #          use_column_width=True)
+                res_plotted = res[0].plot()[:, :, ::-1]
+                st.image(res_plotted, caption='Classification Image',
+                         use_column_width=True)
                 # try:
                 #     with st.expander("Classification Results"):
                 #         for r in res:
