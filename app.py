@@ -84,7 +84,7 @@ if source_radio == settings.IMAGE:
             if st.sidebar.button('Process Image'):
                 # res = model(uploaded_image, conf=confidence )
                 model = YOLO(model_path)
-                results = model(uploaded_image)  # results list
+                results = model(uploaded_image)   
                 st.write(results)
 
                 # for r in results:
