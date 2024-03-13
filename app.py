@@ -85,20 +85,24 @@ if source_radio == settings.IMAGE:
                 # res = model(uploaded_image,
                 #                     conf=confidence
                 #                     )
-                res = YOLO(model_path)
-                names = res.names
+                model = YOLO(model_path)
 
-                for r in res:
+                results = model(uploaded_image)  # results list
+
+                for r in results:
                     max_prob_index = r.probs.top1
                     st.write("Index highest probability:",  max_prob_index)
                     class_name = model.names[max_prob_index]
                     st.write("Class with highest probability:", class_name)
                     # st.write(names)
+                    # boxes = res[0].boxes
+
+                
                 # boxes = res[0].boxes
                 
-                res_plotted = res[0].plot()[:, :, ::-1]
-                st.image(res_plotted, caption='Classification Image',
-                         use_column_width=True)
+                # res_plotted = res[0].plot()[:, :, ::-1]
+                # st.image(res_plotted, caption='Classification Image',
+                #          use_column_width=True)
                 # try:
                 #     with st.expander("Classification Results"):
                 #         for r in res:
