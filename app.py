@@ -8,6 +8,7 @@ import streamlit as st
 # Local Modules
 import settings
 import helper
+from ultralytics import YOLO
 
 # Setting page layout
 st.set_page_config(
@@ -81,9 +82,10 @@ if source_radio == settings.IMAGE:
                      use_column_width=True)
         else:
             if st.sidebar.button('Process Image'):
-                res = model(uploaded_image,
-                                    conf=confidence
-                                    )
+                # res = model(uploaded_image,
+                #                     conf=confidence
+                #                     )
+                model = YOLO(model_path)
                 names = model.names
                 st.write(names)
                 # boxes = res[0].boxes
