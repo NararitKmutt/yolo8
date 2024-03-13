@@ -82,9 +82,9 @@ if source_radio == settings.IMAGE:
                      use_column_width=True)
         else:
             if st.sidebar.button('Process Image'):
-                # res = model(uploaded_image, conf=confidence )
-                model = YOLO(model_path)
-                results = model(uploaded_image)   
+                results = model(uploaded_image, conf=confidence )
+                # model = YOLO(model_path)
+                # results = model(uploaded_image)
                 # st.write(results)
 
                 for r in results:
