@@ -3,6 +3,7 @@ from pathlib import Path
 import PIL
 
 # External packages
+import cv2
 import streamlit as st
 
 # Local Modules
@@ -82,9 +83,12 @@ if source_radio == settings.IMAGE:
                      use_column_width=True)
         else:
             if st.sidebar.button('Process Image'):
-                results = model.predict(uploaded_image, conf=confidence )
-                # model = YOLO(model_path)
-                # results = model(uploaded_image)
+                # img = PIL.Image.open(source_img)
+                img = cv2.imread(uploaded_image)
+
+                # results = model.predict(uploaded_image, conf=confidence )
+                model = YOLO(model_path)
+                results = model(img)
                 st.write(results)
 
                 for r in results:
