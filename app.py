@@ -87,7 +87,13 @@ if source_radio == settings.IMAGE:
                 #                     )
                 res = YOLO(model_path)
                 names = res.names
-                st.write(names)
+
+                for r in res:
+                    max_prob_index = r.probs.top1
+                    st.write("Index highest probability:",  max_prob_index)
+                    class_name = model.names[max_prob_index]
+                    st.write("Class with highest probability:", class_name)
+                    # st.write(names)
                 # boxes = res[0].boxes
                 
                 res_plotted = res[0].plot()[:, :, ::-1]
