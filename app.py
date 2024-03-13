@@ -84,11 +84,9 @@ if source_radio == settings.IMAGE:
         else:
             if st.sidebar.button('Process Image'):
                 # img = PIL.Image.open(source_img)
-                img = cv2.imread(source_img)
-
                 # results = model.predict(uploaded_image, conf=confidence )
                 model = YOLO(model_path)
-                results = model(img)
+                results = model(source_img)
                 st.write(results)
 
                 for r in results:
