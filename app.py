@@ -82,20 +82,18 @@ if source_radio == settings.IMAGE:
                      use_column_width=True)
         else:
             if st.sidebar.button('Process Image'):
-                # res = model(uploaded_image,
-                #                     conf=confidence
-                #                     )
+                # res = model(uploaded_image, conf=confidence )
                 model = YOLO(model_path)
-
                 results = model(uploaded_image)  # results list
+                st.write(results)
 
-                for r in results:
-                    max_prob_index = r.probs.top1
-                    st.write("Index highest probability:",  max_prob_index)
-                    class_name = model.names[max_prob_index]
-                    st.write("Class with highest probability:", class_name)
-                    # st.write(names)
-                    # boxes = res[0].boxes
+                # for r in results:
+                #     max_prob_index = r.probs.top1
+                #     st.write("Index highest probability:",  max_prob_index)
+                #     class_name = model.names[max_prob_index]
+                #     st.write("Class with highest probability:", class_name)
+                #     # st.write(names)
+                #     # boxes = res[0].boxes
 
                 
                 # boxes = res[0].boxes
