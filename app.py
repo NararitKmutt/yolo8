@@ -81,7 +81,7 @@ if source_radio == settings.IMAGE:
                      use_column_width=True)
         else:
             if st.sidebar.button('Process Image'):
-                res = model.predict(uploaded_image,
+                res = model(uploaded_image,
                                     conf=confidence
                                     )
                 names = model.names
